@@ -4,6 +4,7 @@ from mfrc522 import MFRC522
 from config import *
 from buzz import Buzzer
 
+
 # gdy nie przylozona to 2
 # gdy przylozony to na zmiane 2, 0, 2, 0
 class RFIDReader:
@@ -15,7 +16,7 @@ class RFIDReader:
         # gdy przylozony to na zmiane 2, 0, 2, 0
         self.read1 = False
         self.read2 = False
-        self.buzzer = Buzzer(buzzerPin) 
+        self.buzzer = Buzzer(buzzerPin)
 
     def read(self):
         to_return = None
@@ -31,12 +32,11 @@ class RFIDReader:
                 if (not self.read1 and not self.read2):
                     num = 0
                     for i in range(0, len(uid)):
-                        num += uid[i] << (i*8)
+                        num += uid[i] << (i * 8)
                     to_return = num
                     self.buzzer.card_buzzer()
 
         self.read1 = self.read2
         self.read2 = cur
-
 
         return to_return

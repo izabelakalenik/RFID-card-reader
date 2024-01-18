@@ -2,20 +2,21 @@ import tkinter as tk
 from tkinter import ttk
 import sqlite3
 
+
 def load_workers_data():
     for row in tree_workers_data.get_children():
         tree_workers_data.delete(row)
     conn = sqlite3.connect('workers.db')
     cursor = conn.cursor()
 
-
     query = "SELECT card_id, first_name, last_name, registration_date FROM workers"
-   
+
     cursor.execute(query)
     records = cursor.fetchall()
     for row in records:
         tree_workers_data.insert('', tk.END, values=row)
     conn.close()
+
 
 def load_workers_logs_data():
     for row in tree_logs.get_children():
@@ -28,12 +29,13 @@ def load_workers_logs_data():
         FROM workers_log wl
         JOIN workers w ON wl.worker = w.card_id
         """
-    
+
     cursor.execute(query)
     records = cursor.fetchall()
     for row in records:
         tree_logs.insert('', tk.END, values=row)
     conn.close()
+
 
 def update_data():
     conn = sqlite3.connect('workers.db')
@@ -49,6 +51,7 @@ def update_data():
         load_workers_data()
     conn.close()
 
+
 app = tk.Tk()
 app.title("Worker Data Viewer")
 app.geometry("800x500")
@@ -62,7 +65,8 @@ workers_frame = tk.Frame(notebook)
 notebook.add(workers_frame, text='Workers Data')
 
 # Treeview widget for the table
-tree_workers_data = ttk.Treeview(workers_frame, columns=('Card ID', 'First Name', 'Last Name', 'Registration Date'), show='headings')
+tree_workers_data = ttk.Treeview(workers_frame, columns=('Card ID', 'First Name', 'Last Name', 'Registration Date'),
+                                 show='headings')
 tree_workers_data.heading('Card ID', text='Card ID')
 tree_workers_data.heading('First Name', text='First Name')
 tree_workers_data.heading('Last Name', text='Last Name')
@@ -92,14 +96,13 @@ load_button.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="ew")
 update_button = tk.Button(workers_input_frame, text="Update Data", command=update_data)
 update_button.grid(row=1, column=2, columnspan=2, padx=5, pady=5, sticky="ew")
 
-
-
 # Tab for Workers Logs
 workers_logs_frame = tk.Frame(notebook)
 notebook.add(workers_logs_frame, text='Workers Logs')
 
 # Treeview widget for the table
-tree_logs = ttk.Treeview(workers_logs_frame, columns=('Card ID', 'First Name', 'Last Name', 'Log time', 'Terminal id'), show='headings')
+tree_logs = ttk.Treeview(workers_logs_frame, columns=('Card ID', 'First Name', 'Last Name', 'Log time', 'Terminal id'),
+                         show='headings')
 tree_logs.heading('Card ID', text='Card ID')
 tree_logs.heading('First Name', text='First Name')
 tree_logs.heading('Last Name', text='Last Name')

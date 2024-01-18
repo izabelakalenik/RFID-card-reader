@@ -1,5 +1,3 @@
-# client
-
 import paho.mqtt.client as mqtt
 from screen import Screen
 from led import Led
@@ -16,29 +14,27 @@ class Connection:
         self.device_id = "1"
         self.screen = Screen()
         self.led = Led()
-        
-    
+
     def process_message(self, client, userdata, message):
         message_decoded = (str(message.payload.decode("utf-8"))).split(".")
-        
+
         device_id = message_decoded[0]
         message = message_decoded[1]
-        
+
         if device_id == self.device_id and message == "true":
             self.entrance(True)
-        elif(device_id == self.device_id):
+        elif (device_id == self.device_id):
             self.entrance(False)
-        
+
     def send_authorization_request(self, card_number: str):
         self.client.publish("client/authorization", self.device_id + "." + card_number)
 
-
     def entrance(self, enabled):
-            if enabled == True:
-                self.led.blink(0, 255, 0)
-                self.screen.show_message(True)
-                print(str(enabled))
-            else:
-                self.led.blink(255, 0, 0)
-                self.screen.show_message(False)
-                print(str(enabled))
+        if enabled == True:
+            self.led.blink(0, 255, 0)
+            self.screen.show_message(True)
+            print(str(enabled))
+        else:
+            self.led.blink(255, 0, 0)
+            self.screen.show_message(False)
+            print(str(enabled))
