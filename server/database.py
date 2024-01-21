@@ -7,7 +7,7 @@ import os
 class Database:
 
     def __init__(self, db_name="workers.db"):
-        self.db_name = db_name  # name of database
+        self.db_name = db_name  # name of database (defaultowo workers.db)
 
     # create database
     def create_database(self):
@@ -34,8 +34,8 @@ class Database:
         print("The new database created.")
 
     # add a worker with all data
-    # addWorker("420", "Mikolaj", "Jastrzembski", "2024-01-10")
-    def addWorker(self, card_id, first_name, last_name, registration_date):
+    # addWorker("1234", "Mikolaj", "Jastrzembski", "2024-01-10")
+    def add_worker(self, card_id, first_name, last_name, registration_date):
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
@@ -50,8 +50,8 @@ class Database:
         connection.close()
 
     # add a worker only with card ID
-    # addWorker("420", "2024-01-10")
-    def addWorker(self, card_id, registration_date):
+    # addWorker("1234", "2024-01-10")
+    def add_worker(self, card_id, registration_date):
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
@@ -65,7 +65,8 @@ class Database:
         connection.close()
 
     # remove a worker
-    def removeWorker(self, card_id):
+    # removeWorker("1234")
+    def remove_worker(self, card_id):
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
@@ -79,8 +80,8 @@ class Database:
         connection.close()
 
     # add a log entry
-    # addLog("2024-01-11 10:00", "420", "terminalX")
-    def addLog(self, log_time, worker_card_id, terminal_id):
+    # addLog("2024-01-11 10:00", "1234", "terminalX")
+    def add_log(self, log_time, worker_card_id, terminal_id):
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
@@ -91,8 +92,8 @@ class Database:
         connection.close()
 
     # check if a worker exists
-    # removeWorker("420")
-    def checkIfExists(self, card_id):
+    # removeWorker("1234")
+    def check_if_exists(self, card_id):
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
@@ -102,7 +103,9 @@ class Database:
         connection.close()
         return result is not None
 
-    def listWorkers(self):
+    # list all workers if there are some
+    # listWorkers()
+    def list_workers(self):
         connection = sqlite3.connect(self.db_name)
         cursor = connection.cursor()
 
@@ -111,7 +114,7 @@ class Database:
 
         print("\nListing workers:")
         if (len(workers) == 0):
-            print("No workers in database")
+            print("No workers in database.")
         for worker in workers:
             print(worker)
 
